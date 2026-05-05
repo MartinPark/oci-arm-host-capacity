@@ -23,6 +23,24 @@ jobs:
           echo "${{ secrets.OCI_PRIVATE_KEY }}" > /tmp/oci_private_key.pem
           chmod 600 /tmp/oci_private_key.pem
 
+      - name: Debug env
+        env:
+          OCI_REGION: ${{ secrets.OCI_REGION }}
+          OCI_AVAILABILITY_DOMAIN: ${{ secrets.OCI_AVAILABILITY_DOMAIN }}
+          OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
+          OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
+          OCI_SHAPE: ${{ secrets.OCI_SHAPE }}
+          OCI_OCPUS: ${{ secrets.OCI_OCPUS }}
+          OCI_MEMORY_IN_GBS: ${{ secrets.OCI_MEMORY_IN_GBS }}
+        run: |
+          echo "REGION=[${OCI_REGION}]"
+          echo "AD=[${OCI_AVAILABILITY_DOMAIN}]"
+          echo "SUBNET=[${OCI_SUBNET_ID}]"
+          echo "IMAGE=[${OCI_IMAGE_ID}]"
+          echo "SHAPE=[${OCI_SHAPE}]"
+          echo "OCPUS=[${OCI_OCPUS}]"
+          echo "MEMORY=[${OCI_MEMORY_IN_GBS}]"
+          
       - name: Run
         env:
           OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
