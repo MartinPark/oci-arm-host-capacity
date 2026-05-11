@@ -79,7 +79,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
 
         // 에러도 텔레그램 알림
         if ($notifier->isSupported()) {
-            $notifier->notify("❌ 인스턴스 생성 실패:\n$message");
+            $notifier->notify("인스턴스 생성 실패:\n$message");
         }
 
         if (
@@ -97,7 +97,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
     $message = json_encode($instanceDetails, JSON_PRETTY_PRINT);
     echo "$message\n";
     if ($notifier->isSupported()) {
-        $notifier->notify("✅ 인스턴스 생성 성공!\n$message");
+        $notifier->notify("인스턴스 생성 성공!\n$message");
     }
     return;
 }
