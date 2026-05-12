@@ -77,11 +77,6 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         $message = $e->getMessage();
         echo "$message\n";
 
-        // 에러도 텔레그램 알림
-        if ($notifier->isSupported()) {
-            $notifier->notify("인스턴스 생성 실패:\n$message");
-        }
-
         if (
             $e->getCode() === 500 &&
             strpos($message, 'InternalError') !== false &&
@@ -89,6 +84,11 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         ) {
             sleep(16);
             continue;
+        }
+
+        // Out of capacity 아닌 치명적 에러만 텔레그램 알림
+        if ($notifier->isSupported()) {
+            $notifier->notify("인스턴스 생성 실패:\n$message");
         }
         return;
     }
