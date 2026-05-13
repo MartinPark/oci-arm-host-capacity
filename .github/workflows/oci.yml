@@ -47,6 +47,10 @@ jobs:
         if: always()
         run: |
           RESULT=$(cat /tmp/oci_result.txt 2>/dev/null || echo "결과 없음")
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_API_KEY }}/sendMessage" \
-            -d chat_id="${{ secrets.TELEGRAM_USER_ID }}" \
-            -d text="OCI 실행 결과:%0A${RESULT}"
+          if echo "$RESULT" | grep -q "Out of host capacity"; then
+            echo "Out of host capacity - 알림 생략"
+          else
+            curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_API_KEY }}/sendMessage" \
+              -d chat_id="${{ secrets.TELEGRAM_USER_ID }}" \
+              -d text="OCI 실행 결과:%0A${RESULT}"
+          fi
